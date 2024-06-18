@@ -6,6 +6,7 @@ const category = document.getElementById('category');
 
 // Seleciona os elementos da Lista.
 const expenseList = document.querySelector('ul');
+const expensesQuantity = document.querySelector('aside header p span');
 
 
 
@@ -89,9 +90,24 @@ function expenseAdd(newExpense) {
     //Adiciona o item a lista
     expenseList.append(expenseItem);
 
+    //Atualiza os totais
+    updateTotals();
+
   } catch (error) {
     alert('Não foi possível atualizar a lista de despesas.');
     console.log(error);
 
+  }
+}
+
+//Atualiza totais
+function updateTotals(){
+  try {
+    const items = expenseList.children;
+    expensesQuantity.textContent = `${items.length} ${items.length > 1 ? 'despesas' : 'despesa'}`;
+    
+  } catch (error) {
+    console.log(error);
+    alert('Não foi possível atualizar os totais.');
   }
 }
