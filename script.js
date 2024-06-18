@@ -133,3 +133,10 @@ function updateTotals(){
     alert('Não foi possível atualizar os totais.');
   }
 }
+
+//Evento que caputura o clique nos itens da lista
+expenseList.addEventListener('click', function (event){
+  if(event.target.classList.contains('remove-icon')){
+    console.log(event);
+  }
+})
