@@ -75,7 +75,10 @@ function expenseAdd(newExpense) {
     expenseAmount.classList.add('expense-amount');
     expenseAmount.innerHTML = `<small>R$</small> ${newExpense.amount
       .toUpperCase()
-      .replace('R$', '')}`
+      .replace('R$', '')}`;
+
+    // cria p ícone de remover
+
 
     //Adiciona as informações no item
     expenseItem.append(expenseIcon, expenseInfo, expenseAmount);
