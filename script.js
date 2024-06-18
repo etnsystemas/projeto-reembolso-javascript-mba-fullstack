@@ -43,6 +43,7 @@ form.onsubmit = (event) => {
 
 
 
+
 }
 
 function expenseAdd(newExpense) {
@@ -80,10 +81,10 @@ function expenseAdd(newExpense) {
       .replace('R$', '')}`;
 
     // cria ícone de remover
-      const removeIcon = document.createElement('img');
-      removeIcon.classList.add('remove-icon');
-      removeIcon.setAttribute('src', 'img/remove.svg');
-      removeIcon.setAttribute('alt', 'remover');
+    const removeIcon = document.createElement('img');
+    removeIcon.classList.add('remove-icon');
+    removeIcon.setAttribute('src', 'img/remove.svg');
+    removeIcon.setAttribute('alt', 'remover');
 
     //Adiciona as informações no item
     expenseItem.append(expenseIcon, expenseInfo, expenseAmount, removeIcon);
@@ -94,6 +95,9 @@ function expenseAdd(newExpense) {
     //Atualiza os totais
     updateTotals();
 
+    //limpa o formulario
+    formClear();
+
   } catch (error) {
     alert('Não foi possível atualizar a lista de despesas.');
     console.log(error);
@@ -102,19 +106,20 @@ function expenseAdd(newExpense) {
 }
 
 //Atualiza totais
-function updateTotals(){
+function updateTotals() {
   try {
     const items = expenseList.children;
     expensesQuantity.textContent = `${items.length} ${items.length > 1 ? 'despesas' : 'despesa'}`;
 
     let total = 0;
 
-    for(let item=0; item < items.length; item++){
+    for (let item = 0; item < items.length; item++) {
       const itemAmount = items[item].querySelector('.expense-amount');
-      let value = itemAmount.textContent.replace(/[^\d,]/g, "").replace(",",".");
+      let value = itemAmount.textContent.replace(/[^\d,]/g, "").replace(",", ".");
+      console.log(value);
       value = parseFloat(value);
-      if(isNaN(value)){
-        return alert('Não foi possível calcular o total. O valor não parece ser um número');        
+      if (isNaN(value)) {
+        return alert('Não foi possível calcular o total. O valor não parece ser um número');
       }
 
       total += Number(value);
@@ -127,7 +132,7 @@ function updateTotals(){
 
     expensesTotal.innerHTML = '';
     expensesTotal.append(symbolBRL, total);
-    
+
   } catch (error) {
     console.log(error);
     alert('Não foi possível atualizar os totais.');
@@ -135,10 +140,17 @@ function updateTotals(){
 }
 
 //Evento que caputura o clique nos itens da lista
-expenseList.addEventListener('click', function (event){
-  if(event.target.classList.contains('remove-icon')){
+expenseList.addEventListener('click', function (event) {
+  if (event.target.classList.contains('remove-icon')) {
     const item = event.target.closest(".expense");
     item.remove()
   }
   updateTotals();
 })
+
+function formClear() {
+  //limpa o formulario
+  form.reset();
+  //seta o focus
+  expense.focus()
+}
