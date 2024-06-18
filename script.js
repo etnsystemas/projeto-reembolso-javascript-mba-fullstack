@@ -6,6 +6,7 @@ const category = document.getElementById('category');
 
 // Seleciona os elementos da Lista.
 const expenseList = document.querySelector('ul');
+const expensesTotal = document.querySelector('aside header h2');
 const expensesQuantity = document.querySelector('aside header p span');
 
 
@@ -105,6 +106,21 @@ function updateTotals(){
   try {
     const items = expenseList.children;
     expensesQuantity.textContent = `${items.length} ${items.length > 1 ? 'despesas' : 'despesa'}`;
+
+    let total = 0;
+
+    for(let item=0; item < items.length; item++){
+      const itemAmount = items[item].querySelector('.expense-amount');
+      let value = itemAmount.textContent.replace(/[^\d]/g, "").replace(",",".");
+      value = parseFloat(value);
+      if(isNaN(value)){
+        return alert('Não foi possível calcular o total. O valor não parece ser um número');        
+      }
+
+      total += Number(value);
+    }
+
+    expensesTotal.innerHTML
     
   } catch (error) {
     console.log(error);
